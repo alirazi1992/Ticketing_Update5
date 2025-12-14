@@ -8,14 +8,13 @@ import type {
 
 /**
  * Get all technicians (Admin only)
- * Backend route: GET /api/Users/technicians (case-insensitive, so /api/users/technicians also works)
+ * Backend route: GET /api/admin/technicians
  */
 export async function getAllTechnicians(token: string | null): Promise<ApiTechnicianResponse[]> {
   if (!token) {
     throw new Error("Authentication required")
   }
-  // Match Swagger route: /api/Users/technicians (UsersController with [Route("api/[controller]")])
-  return apiRequest<ApiTechnicianResponse[]>("/api/Users/technicians", {
+  return apiRequest<ApiTechnicianResponse[]>("/api/admin/technicians", {
     method: "GET",
     token,
   })

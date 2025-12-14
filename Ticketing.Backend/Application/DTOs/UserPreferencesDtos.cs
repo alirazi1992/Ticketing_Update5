@@ -48,5 +48,9 @@ public class UserPreferencesUpdateRequest
     [Required]
     [RegularExpression("^(fa|en)$", ErrorMessage = "Language must be fa or en")]
     public string Language { get; set; } = "fa";
+
+    [Required]
+    [MaxLength(100)]
+    public string Timezone { get; set; } = "Asia/Tehran";
 }
 

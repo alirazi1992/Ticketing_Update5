@@ -10,6 +10,7 @@ public class UserPreferences
     public string Theme { get; set; } = "system"; // "light" | "dark" | "system"
     public string FontSize { get; set; } = "md"; // "sm" | "md" | "lg"
     public string Language { get; set; } = "fa"; // "fa" | "en"
+    public string Timezone { get; set; } = "Asia/Tehran";
 
     // Notification preferences
     public bool EmailEnabled { get; set; } = true;

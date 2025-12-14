@@ -13,6 +13,7 @@ public class UserPreferencesConfiguration : IEntityTypeConfiguration<UserPrefere
         builder.Property(p => p.Theme).IsRequired().HasMaxLength(20);
         builder.Property(p => p.FontSize).IsRequired().HasMaxLength(10);
         builder.Property(p => p.Language).IsRequired().HasMaxLength(10);
+        builder.Property(p => p.Timezone).IsRequired().HasMaxLength(100);
 
         builder.HasOne(p => p.User)
             .WithOne(u => u.Preferences)

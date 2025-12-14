@@ -795,32 +795,28 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         </DialogHeader>
 
         <div className="overflow-y-auto max-h-[calc(90vh-120px)]" dir="rtl">
-          <Tabs defaultValue="profile" className="w-full" dir="rtl">
+          <Tabs defaultValue="general" className="w-full" dir="rtl">
             {/* Tabs navigation - RTL order: rightmost item is first in RTL */}
-            <TabsList className="grid w-full grid-cols-5 mb-6" dir="rtl">
-              <TabsTrigger value="profile" className="gap-2 text-xs flex-row-reverse" dir="rtl">
+            <TabsList className="grid w-full grid-cols-4 mb-6" dir="rtl">
+              <TabsTrigger value="general" className="gap-2 text-xs flex-row-reverse" dir="rtl">
                 <User className="w-4 h-4" />
-                پروفایل
+                تنظیمات عمومی
               </TabsTrigger>
-              <TabsTrigger value="security" className="gap-2 text-xs flex-row-reverse" dir="rtl">
-                <Lock className="w-4 h-4" />
-                امنیت
+              <TabsTrigger value="ticketing-defaults" className="gap-2 text-xs flex-row-reverse" dir="rtl">
+                <Monitor className="w-4 h-4" />
+                تنظیمات پیش‌فرض تیکتینگ
               </TabsTrigger>
               <TabsTrigger value="notifications" className="gap-2 text-xs flex-row-reverse" dir="rtl">
                 <Bell className="w-4 h-4" />
-                اعلان‌ها
+                تنظیمات اعلان‌ها
               </TabsTrigger>
-              <TabsTrigger value="appearance" className="gap-2 text-xs flex-row-reverse" dir="rtl">
-                <Palette className="w-4 h-4" />
-                ظاهر
-              </TabsTrigger>
-              <TabsTrigger value="system" className="gap-2 text-xs flex-row-reverse" dir="rtl">
-                <Settings className="w-4 h-4" />
-                سیستم
+              <TabsTrigger value="security" className="gap-2 text-xs flex-row-reverse" dir="rtl">
+                <Lock className="w-4 h-4" />
+                تنظیمات امنیتی
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="profile" className="space-y-4 w-full">
+            <TabsContent value="general" className="space-y-4 w-full">
               <Card dir="rtl" className="w-full">
                 <CardHeader className="text-right">
                   <CardTitle className="text-right">اطلاعات شخصی</CardTitle>
@@ -991,6 +987,66 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                   </form>
                 </CardContent>
               </Card>
+
+              {preferencesLoading && !preferences ? (
+                <Card dir="rtl">
+                  <CardContent className="py-8 text-center">
+                    <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-muted-foreground">در حال بارگذاری تنظیمات...</p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card dir="rtl" className="w-full">
+                  <CardHeader className="w-full text-right space-y-2">
+                    <CardTitle className="text-right flex items-center gap-2 justify-end">
+                      <Palette className="w-5 h-5" />
+                      تنظیمات ظاهری
+                    </CardTitle>
+                    <CardDescription className="text-right">
+                      ظاهر و نمایش سیستم را شخصی‌سازی کنید
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6" dir="rtl">
+                    <ThemeSelector />
+                    <Separator />
+                    <FontSizeSelector />
+                    <Separator />
+                    <div className="space-y-3">
+                      <Label className="text-sm font-medium">زبان سیستم</Label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button
+                          type="button"
+                          variant={preferences?.language === "fa" ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handleAppearanceChange("language", "fa")}
+                          disabled={appearanceSaving || preferencesLoading}
+                          className="h-10 gap-2"
+                        >
+                          <Languages className="w-4 h-4" />
+                          فارسی
+                        </Button>
+                        <Button
+                          type="button"
+                          variant={preferences?.language === "en" ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handleAppearanceChange("language", "en")}
+                          disabled={appearanceSaving || preferencesLoading}
+                          className="h-10 gap-2"
+                        >
+                          <Globe className="w-4 h-4" />
+                          English
+                        </Button>
+                      </div>
+                    </div>
+                    {appearanceSaving && (
+                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        در حال ذخیره...
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
             </TabsContent>
 
             <TabsContent value="security" className="space-y-4 w-full">
@@ -1182,69 +1238,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
               )}
             </TabsContent>
 
-            <TabsContent value="appearance" className="space-y-4 w-full">
-              {preferencesLoading && !preferences ? (
-                <Card dir="rtl">
-                  <CardContent className="py-8 text-center">
-                    <div className="w-8 h-8 border-2 border-current border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-muted-foreground">در حال بارگذاری تنظیمات...</p>
-                  </CardContent>
-                </Card>
-              ) : (
-                <Card dir="rtl" className="w-full">
-                  <CardHeader className="w-full text-right space-y-2">
-                    <CardTitle className="text-right flex items-center gap-2 justify-end">
-                      <Palette className="w-5 h-5" />
-                      تنظیمات ظاهری
-                    </CardTitle>
-                    <CardDescription className="text-right">
-                      ظاهر و نمایش سیستم را شخصی‌سازی کنید
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6" dir="rtl">
-                    <ThemeSelector />
-                    <Separator />
-                    <FontSizeSelector />
-                    <Separator />
-                    <div className="space-y-3">
-                      <Label className="text-sm font-medium">زبان سیستم</Label>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Button
-                          type="button"
-                          variant={preferences?.language === "fa" ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => handleAppearanceChange("language", "fa")}
-                          disabled={appearanceSaving || preferencesLoading}
-                          className="h-10 gap-2"
-                        >
-                          <Languages className="w-4 h-4" />
-                          فارسی
-                        </Button>
-                        <Button
-                          type="button"
-                          variant={preferences?.language === "en" ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => handleAppearanceChange("language", "en")}
-                          disabled={appearanceSaving || preferencesLoading}
-                          className="h-10 gap-2"
-                        >
-                          <Globe className="w-4 h-4" />
-                          English
-                        </Button>
-                      </div>
-                    </div>
-                    {appearanceSaving && (
-                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                        در حال ذخیره...
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
-
-            <TabsContent value="system" className="space-y-4 w-full">
+            <TabsContent value="ticketing-defaults" className="space-y-4 w-full">
               {!isAdmin ? (
                 <Card dir="rtl" className="w-full">
                   <CardContent className="py-8 text-center">

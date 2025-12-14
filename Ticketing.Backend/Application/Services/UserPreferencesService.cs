@@ -69,7 +69,7 @@ public class UserPreferencesService : IUserPreferencesService
             FontSize = preferences.FontSize,
             Language = preferences.Language,
             Direction = direction,
-            Timezone = "Asia/Tehran", // Default timezone
+            Timezone = preferences.Timezone ?? "Asia/Tehran",
             Notifications = new NotificationPreferencesResponse
             {
                 EmailEnabled = preferences.EmailEnabled,
@@ -95,6 +95,7 @@ public class UserPreferencesService : IUserPreferencesService
                 Theme = request.Theme,
                 FontSize = request.FontSize,
                 Language = request.Language,
+                Timezone = request.Timezone,
                 EmailEnabled = true,
                 PushEnabled = true,
                 SmsEnabled = false,
@@ -110,6 +111,7 @@ public class UserPreferencesService : IUserPreferencesService
             preferences.Theme = request.Theme;
             preferences.FontSize = request.FontSize;
             preferences.Language = request.Language;
+            preferences.Timezone = request.Timezone;
             preferences.UpdatedAt = DateTime.UtcNow;
         }
 
@@ -124,7 +126,7 @@ public class UserPreferencesService : IUserPreferencesService
             FontSize = preferences.FontSize,
             Language = preferences.Language,
             Direction = direction,
-            Timezone = "Asia/Tehran",
+            Timezone = preferences.Timezone ?? "Asia/Tehran",
             Notifications = new NotificationPreferencesResponse
             {
                 EmailEnabled = preferences.EmailEnabled,
@@ -176,6 +178,7 @@ public class UserPreferencesService : IUserPreferencesService
                 Theme = "system",
                 FontSize = "md",
                 Language = "fa",
+                Timezone = "Asia/Tehran",
                 EmailEnabled = request.EmailEnabled,
                 PushEnabled = request.PushEnabled,
                 SmsEnabled = request.SmsEnabled,
